@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# != 2 ]; then
+    echo "$0 <target dir> <announce url>"
+    exit
+fi
+TARGET=`basename $1`
+ANNOUNCE_URL="$2"
+BITTORRENT_PORT="49999"
+echo "making $TARGET.torrent"
+createtorrent -a $ANNOUNCE_URL -p $BITTORRENT_PORT $TARGET $TARGET.torrent

@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+%w[rubygems pp mp3info].each{|lib| require lib}
+
+if ARGV.length == 0
+  puts "Usage:  #{File.basename $0} <mp3>"
+  exit
+end
+
+ARGV.each do |arg|
+  file = File.basename arg
+  next if file.split('.')[-1] != "mp3"
+  Mp3Info.open(arg) do |mp3|
+    begin
+      puts [(mp3.vbr ? "VBR: ": ""), mp3.bitrate, " ++++++ ", arg].join(" ")
+    rescue Mp3InfoError => e
+    end
+  end  
+end

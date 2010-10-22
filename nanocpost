@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+if ARGV.length != 1
+  puts "usage: #{$0} post_id"
+  exit
+end
+
+t         = Time.now
+post_dir  = ["content", t.strftime("%Y"), t.strftime("%m"), t.strftime("%d"), ARGV[0]].join("/")
+post_id   = [post_dir, ARGV[0]].join("/")
+post_yaml = "#{post_id}.yaml"
+post_text = "#{post_id}.txt"
+
+`mkdir -p #{post_dir}`
+
+post_template = <<TEM
+# Built-in
+
+# Custom
+title: "#{ARGV[0]}"
+tags: []
+page_id: "#{ARGV[0]}"
+created_at: "#{Time.now}"
+last_modified: ""
+kind: "article"
+TEM
+
+if ! File.exist? post_yaml
+  `echo '#{post_template}' > #{post_yaml}`
+end
+
+`touch #{post_text}`
+
+system("`which vim` -O #{post_text} #{post_yaml} && nanoc co")

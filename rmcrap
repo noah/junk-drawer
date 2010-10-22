@@ -1,0 +1,9 @@
+#!/bin/sh
+
+CRAP=/drum/dl/bt/_crap.txt
+
+cd /drum/dl/bt
+
+cat $CRAP|xargs rm -Rfv
+cat $CRAP
+echo "" > $CRAP

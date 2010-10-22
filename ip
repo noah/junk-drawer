@@ -1,0 +1,2 @@
+#!/bin/sh
+elinks --dump checkip.dyndns.org | sed s/'   Current IP Address: '//

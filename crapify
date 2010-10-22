@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $# -ne "1" ]; then
+    echo "Usage:  $0 <crap>"
+    exit
+fi
+
+CRAP=/drum/dl/bt/_crap.txt
+
+cd /drum/dl/bt
+
+echo "$1"| sed 's/ /\\ /g' >> $CRAP
+
+echo "*** $(tail -n 1 $CRAP) crapified"
