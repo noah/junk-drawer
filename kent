@@ -1,0 +1,8 @@
+cd ~
+killall dhclient > /dev/null 2>&1
+killall wpa_supplicant > /dev/null 2>&1
+killall mplayer > /dev/null 2>&1
+ifconfig wlan0 down > /dev/null 2>&1
+dhclient eth0 > /dev/null 2>&1
+echo "Got $(ifconfig eth0|egrep "inet addr"|awk -F" " '{print $2}' |awk -F":" '{print $2}')"
+ping google.com
