@@ -1,0 +1,13 @@
+#!/bin/sh
+
+user=noah
+host=downbe.at
+base=/drum/dl/bt/torrents
+
+find /home/noah/ff_dl/bt -iname "*.torrent" | while read path; do
+  site=$(basename $(dirname "$path"))
+  scp "$path" "$user@$host:$base/$site"
+  if [[ $? -eq 0 ]]; then
+    rm -fv "$path"
+  fi
+done
