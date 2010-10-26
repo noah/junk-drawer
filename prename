@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # Usage: prename perlexpr [files]
 
-($regexp = shift @ARGV) || die "Usage:  prename perlexpr [filenames]n";
+($regexp = shift @ARGV) || die "Usage:  prename perlexpr [filenames]\n";
 
 if (!@ARGV) {
    @ARGV = <STDIN>;

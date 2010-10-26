@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 if ARGV.length != 1
   puts "usage: #{$0} post_id"
   exit
@@ -24,7 +25,10 @@ last_modified: ""
 kind: "article"
 TEM
 
-`echo '#{post_template}' > #{post_yaml}` if !File.exists?(post_yaml)
+if ! File.exist? post_yaml
+  `echo '#{post_template}' > #{post_yaml}`
+end
+
 `touch #{post_text}`
 
-system("`which vim` -O #{post_text} #{post_yaml} && nanoc co --all && git add content/* && git commit -a -m #{ARGV[0]}")
+system("`which vim` -O #{post_text} #{post_yaml} && nanoc co")

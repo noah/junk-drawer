@@ -5,7 +5,9 @@ if [ $# -ne "1" ]; then
     exit
 fi
 
-CRAP=/mnt/drum/dl/bt/_crap.txt
+CRAP=/drum/dl/bt/_crap.txt
+
+cd /drum/dl/bt
 
 echo "$1"| sed 's/ /\\ /g' >> $CRAP
 
