@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+%w[rubygems rdiscount].each{|lib| require lib}
+puts RDiscount.new(IO.readlines(ARGV[0],'r').to_s).to_html

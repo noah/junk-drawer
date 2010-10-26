@@ -1,8 +1,6 @@
 #!/bin/sh
 
-CRAP=/drum/dl/bt/_crap.txt
-
-cd /drum/dl/bt
+CRAP=/mnt/drum/dl/bt/_crap.txt
 
 cat $CRAP|xargs rm -Rfv
 cat $CRAP
