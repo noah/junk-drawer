@@ -1,1 +1,0 @@
-/home/noah/gits/github/vim256-color/256colors2.rb
