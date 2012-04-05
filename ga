@@ -1,20 +1,23 @@
-#!/bin/bash
+#!/bin/zsh
 
 # simplify gnupod_addsong.pl syntax
 #
-# point it at a directory to add all .mp3 recursively
+# point it at a directory to add all .mp3 and .flac recursively
+# - encodes flac to V0 (-x mp3 -e 0 flag)
 
-if [ "$1" == "" ]; then
+if [ $# -eq 0 ]; then
   echo "$0 <dir>"
-  exit
+  exit -1
 fi
 
-while [ $# -ne 0 ]; do
-  #find "$1" -iname "*.mp3" -exec gnupod_addsong.pl {} 2>/dev/null \; 
-  find "$1" -type d -exec echo $(bash -c ls {}/*.mp3) \;
+unsetopt CASE_GLOB
+while [ $# -gt 0 ]; do
+  find "$1" -type d | while read line; do
+    eval "gnupod_addsong.pl \"$line\"/*.mp3 2> /dev/null"
+    eval "gnupod_addsong.pl -x mp3 -e 0 \"$line\"/*.flac 2> /dev/null"
+  done
   shift
 done
 
-#mktunes.pl 2> /dev/null
-
+mktunes.pl
 df -h|grep ipod
