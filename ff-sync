@@ -1,6 +1,6 @@
 #!/bin/bash
 STATIC=main
-LINK=0k2srzdf.default
+LINK=a8i1yvjp.default
 VOLATILE=/dev/shm/noah/firefox
 
 cd ~/.mozilla/firefox
@@ -13,7 +13,10 @@ if [[ `readlink $LINK` != $VOLATILE ]]; then
 fi
 
 if [[ -e $LINK/.unpacked ]]; then
-  rsync -av --delete --exclude .unpacked ./$LINK/ ./$STATIC/
+  rsync -av --delete        \
+    --exclude=.unpacked     \
+    --exclude=.parentlock   \
+    ./$LINK/ ./$STATIC/
 else
   rsync -av ./$STATIC/ ./$LINK/
   touch $LINK/.unpacked
