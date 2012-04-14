@@ -3,11 +3,10 @@
 # (r)iddim (e)nqueue (m)ultiple
 #
 #   A shell wrapper for riddim -e
-#   See:kk
-# 
 #
-# Usage: enq [directory (default=.)]
+# Usage: rem
 #
+
 which riddim > /dev/null 2>&1
 if [[ $? -ne 0 ]]; then
   echo "Please install riddim from http://github.com/noah/riddim"
@@ -19,9 +18,7 @@ fi
 tmpfile="$(mktemp /tmp/enq.XXXXXXXXXX)"
 
 cat > $tmpfile <<EOF
-# The following music has been downloaded.  Uncommented lines will be
-# enqueued to the riddim playlist. 
-#
+# Uncomment lines to enqueue to riddim playlist. 
 EOF
 
 tempfile_last_touched=$(stat -c '%Y' $tmpfile)
@@ -30,7 +27,15 @@ pushd "$music_dir" > /dev/null
 
 # find directories and common audio files; list by time
 # write to a file
-echo "$(ls *.flac 2>/dev/null)$(ls *.mp3 2>/dev/null)$(ls -t -d */ 2>/dev/null)" | while read line; do
+echo "\
+>>> flac
+$(ls *.flac 2>/dev/null)
+
+>>> mp3
+$(ls *.mp3 2>/dev/null)
+
+>>> dirs
+$(ls -t -d */ 2>/dev/null)" | while read line; do
   echo "# $line"
 done >> "$tmpfile"
 
