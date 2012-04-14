@@ -1,13 +1,24 @@
 #!/bin/sh
 
+if [[ $# -eq 0 ]]; then
+  echo "usage: $0 <host>"
+  exit -1
+fi
+
+export DISPLAY=:0
 user=noah
-host=downbe.at
-base=/drum/dl/bt/torrents
+host="$1"
+base=/drum/bt/torrents
+icon=/usr/share/icons/gnome/24x24/actions/go-up.png
 
 find /home/noah/ff_dl/bt -iname "*.torrent" | while read path; do
-  site=$(basename $(dirname "$path"))
-  scp "$path" "$user@$host:$base/$site"
+  site=$(/usr/bin/basename $(/usr/bin/dirname "$path"))
+  echo $site
+  #path=$(echo $path | /bin/sed s#\'#\\\\\'#) # escape single quotes
+  echo scp "$path" "$user@$host:$base/$site"
+  /usr/bin/scp "$path" "$user@$host:$base/$site"
   if [[ $? -eq 0 ]]; then
-    rm -fv "$path"
+    DISPLAY=:0 /usr/bin/notify-send -t 0 -i "$icon" "$(/usr/bin/basename "$path" | /bin/sed 's/.torrent//')"
+    /bin/rm -fv "$path"
   fi
 done
