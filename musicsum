@@ -1,0 +1,42 @@
+#!/bin/zsh
+
+# N.K. Tilton <code@tilton.co>
+# LICENSE: MIT
+#
+# summarize music directory
+#
+# point it at a directory to find out which directories contain .mp3 
+# and/or .flac files, respectively
+
+if [ $# -eq 0 ]; then
+  echo "$0 <dir>"
+  set -- . "$@"
+fi
+
+unsetopt CASE_GLOB
+while [ $# -gt 0 ]; do
+  find "$1" -type d | while read dir; do
+    mp3=
+    flac=
+    [[ "$(find "$dir" -name "*.mp3" -maxdepth 1| wc -l)" -gt "0" ]] && mp3=1
+    [[ "$(find "$dir" -name "*.flac" -maxdepth 1| wc -l)" -gt "0" ]] && flac=1
+
+    if [ $flac ] || [ $mp3 ]; then
+            echo -n "[ "
+            if [ $mp3 ]; then
+                    echo -n "M "
+            else
+                    echo -n "- "
+            fi
+            if [ $flac ]; then
+                    echo -n "F "
+            else
+                    echo -n "- "
+            fi
+            echo "] $dir"
+    else
+            echo "--- $dir"
+    fi
+  done
+  shift
+done
