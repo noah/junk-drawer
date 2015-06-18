@@ -1,5 +1,9 @@
 #!/bin/bash
-for i in *.m4a; 
-  do echo "Converting: ${i%.m4a}.mp3"
-  faad -o - "$i" | lame - "${i%.m4a}.mp3"
-done
+
+parallel --no-notice -u\
+        'a={}; ffmpeg -loglevel warning -vsync 2 -n -i "$a" -qscale:a 0 "${a[@]/%m4a/mp3}"' ::: *.m4a
+
+#for i in *.m4a; 
+#  do echo "Converting: ${i%.m4a}.mp3"
+#  faad -o - "$i" | lame - "${i%.m4a}.mp3"
+#done

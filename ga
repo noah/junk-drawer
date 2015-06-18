@@ -14,7 +14,7 @@ unsetopt CASE_GLOB
 while [ $# -gt 0 ]; do
   find "$1" -type d | while read line; do
     eval "gnupod_addsong.pl \"$line\"/*.mp3 2> /dev/null"
-    eval "gnupod_addsong.pl -x mp3 -e 0 \"$line\"/*.flac 2> /dev/null"
+    #eval "gnupod_addsong.pl -x mp3 -e 0 \"$line\"/*.flac 2> /dev/null"
   done
   shift
 done

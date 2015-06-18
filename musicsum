@@ -9,7 +9,6 @@
 # and/or .flac files, respectively
 
 if [ $# -eq 0 ]; then
-  echo "$0 <dir>"
   set -- . "$@"
 fi
 
